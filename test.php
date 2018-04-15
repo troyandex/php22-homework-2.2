@@ -13,6 +13,9 @@ $questions = $test['questions'];
 //echo "<pre>";
 //print_r($questions);
 
+//echo "<pre>";
+//print_r($_POST);
+//echo "</pre>";
 ?>
 
 <!DOCTYPE html>

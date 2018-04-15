@@ -1,15 +1,26 @@
 <?php
+echo "<pre>";
+print_r($_FILES);
+echo "<hr>";
+print_r($_POST);
+echo "<hr>";
 
-$file = "list.php";
-//если файла нет... тогда создаем
-if (!file_exists($file)) {
-    $fp = fopen($file, "w");
-}
-$file = "test.php";
-if (!file_exists($file)) {
-    $fp = fopen($file, "w");
-}
+if (isset($_FILES)) { // могу ошибаться с условием (пример по которому работал - больше условий)
+    $file_name = $_FILES['test_file']['name'];
+    echo $file_name . " - имя файла <hr>";
 
+    $tmp_dir = $_FILES['test_file']['tmp_name'];
+    echo $tmp_dir . " - временный адрес файла <hr>";
+
+    $server = 'server/';
+    $new_dir = $server . $file_name;
+    echo $new_dir . " - будет новый адрес файла <hr>";
+
+    $path_info = pathinfo($server . $file_name);
+    print_r($path_info);
+    echo " - масив с информацие по файлу <hr>";
+};
+echo "</pre>";
 ?>
 
 <!DOCTYPE html>
@@ -26,7 +37,6 @@ if (!file_exists($file)) {
 </head>
 
 <body>
-<div>
     <div class="container">
         <h2>Меню:</h2>
         <ul>
@@ -36,12 +46,19 @@ if (!file_exists($file)) {
 
         <h2>Форма:</h2>
         <form method="post" enctype=multipart/form-data>
-            <input type=file name=testfile>
+            <input type=file name=test_file>
             <input type=submit value=Загрузить>
+            <p>
+                <?php
+                if ($path_info['extension'] === 'json') {
+                    move_uploaded_file($_FILES['test_file']['tmp_name'], $new_dir); // пока ошибка
+                    echo "<strong>Тест загружен на сервер</strong>";
+                }else{
+                    echo "<strong>Неверный формат (нужен .json)</strong>";
+                }
+                ?>
+            </p>
         </form>
-
-
     </div>
-</div>
 </body>
 </html>
