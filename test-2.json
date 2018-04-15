@@ -1,0 +1,39 @@
+{
+    "title": "Название теста <strong>№2</strong>",
+    "questions": [
+        {
+            "question": "Есть ли возможность для креатива?",
+            "answers": [
+                {
+                    "answer": "Конечно есть (подсказка: тру)",
+                    "result": true
+                },
+                {
+                    "answer": "What??",
+                    "result": false
+                },
+                {
+                    "answer": "Возможность есть - времени нет... (подсказка: тру)",
+                    "result": true
+                }
+            ]
+        },
+        {
+            "question": "Нужен ли еще вопрос?",
+            "answers": [
+                {
+                    "answer": "Да",
+                    "result": false
+                },
+                {
+                    "answer": "Нужно попробовать (подсказка: тру)",
+                    "result": true
+                },
+                {
+                    "answer": "Нет",
+                    "result": false
+                }
+            ]
+        }
+    ]
+}

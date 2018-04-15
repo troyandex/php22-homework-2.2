@@ -1,0 +1,39 @@
+{
+    "title": "Название теста <strong>№1</strong>",
+    "questions": [
+        {
+            "question": "Быть или не быть?",
+            "answers": [
+                {
+                    "answer": "Быть",
+                    "result": false
+                },
+                {
+                    "answer": "Не быть",
+                    "result": false
+                },
+                {
+                    "answer": "Относительно (подсказка: тру)",
+                    "result": true
+                }
+            ]
+        },
+        {
+            "question": "Нужен ли еще вопрос?",
+            "answers": [
+                {
+                    "answer": "Да",
+                    "result": false
+                },
+                {
+                    "answer": "Попробовать стоит (подсказка: тру)",
+                    "result": true
+                },
+                {
+                    "answer": "Нет",
+                    "result": false
+                }
+            ]
+        }
+    ]
+}
