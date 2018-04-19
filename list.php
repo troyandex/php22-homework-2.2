@@ -1,5 +1,5 @@
 <?php
-$file_list = glob('*.json');
+$file_list = glob('server/*.json');
 // var_dump($file_list);
 ?>
 

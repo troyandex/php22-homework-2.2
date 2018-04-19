@@ -1,13 +1,3 @@
-<?php
-echo "<pre>";
-print_r($_FILES);
-echo "<hr>";
-print_r($_POST);
-echo "<hr>";
-
-echo "</pre>";
-?>
-
 <!DOCTYPE html>
 <html lang="ru">
 
@@ -38,16 +28,21 @@ echo "</pre>";
             if (isset($_FILES) && isset($_POST) && isset($_FILES['test_file'])) {
                 $file_name = $_FILES['test_file']['name'];
                 $tmp_file = $_FILES['test_file']['tmp_name'];
-                $server = 'server/';
-                $path_info = pathinfo($server . $file_name);
+                if (is_dir("server"))
+                {
+                    $server = 'server/';
+                    $path_info = pathinfo($server . $file_name);
 
-                if ($path_info['extension'] === 'json') {
-                    move_uploaded_file($tmp_file, $server .$file_name);
-                    echo "<strong>Тест загружен на сервер</strong>";
-                    exit;
-                }else {
-                    echo "<strong>Неверный формат (нужен .json)</strong>";
-                };
+                    if ($path_info['extension'] === 'json') {
+                        move_uploaded_file($tmp_file, $server .$file_name);
+                        echo "<strong>Тест загружен на сервер</strong>";
+                        exit;
+                    }else {
+                        echo "<strong>Неверный формат (нужен .json)</strong>";
+                    };
+                } else {
+                    echo "Нет папки для загрузки тестов";
+                }
             };
 
             ?>

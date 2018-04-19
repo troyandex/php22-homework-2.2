@@ -45,41 +45,36 @@ echo "</pre>";
         <form method="post">
             <fieldset>
                 <?php
-
-                foreach ($questions as $number) :  // для каждого вопроса по порядку
-                    $question = $number['question'];
-                    echo "<pre>";
-                    print_r($number);
-                    echo "</pre>";
-                    echo "<h4>Вопрос: $question</h4>"; // выводим вопрос
-
+                foreach ($questions as $key1 => $number) :  // для каждого вопроса по порядку
+                    $question = $number['question'];// массив с вопросами
+                    $answers = $number['answers']; // массив с ответами
                     $result_true = 0; // переменная для необходимого кол-ва верных ответов
-                    $answers = $number['answers']; // массив  с ответами
 
-                    foreach ($answers as $key => $item) : // для каждого ответа - проверяем верен ли он
-                        if ($item['result'] ===  true) {
+                    echo "<h4>Вопрос: $question</h4>"; // выводим вопрос
+                    foreach ($answers as $key2 => $option) : // выводим каждый ответ и считаем правильные
+
+                        if ($option['result'] ===  true) {
                             $result_true++; // если верен - плюсуем
                         }
                 ?>
                 <label class="answer">
-                    <input type="checkbox" name="<?=$key;?>" value="<?=$item['answer'];?>">
-                    <?=$item['answer'];?>
+                    <!-- $key1 - вопрос, $key2 - ответ, -->
+                    <input type="checkbox" name="<?php echo $key1 . "-" . $key2;?>" value="<?=$option['answer'];?>">
+                    <?=$option['answer'];?>
                 </label>
 
                 <?php
-
                     endforeach; // заканчиваем цикл с выводом всех и подсчетом верных ответов
                     $result_true_array[] = $result_true; // колчесиво правильных ответов заноситься в масив
                 endforeach;
-
-                echo "<pre>";
-                print_r($result_true_array); // вывод масива с количеством правильных ответов по всем вопросам теста
-                echo "</pre>";
+//                echo "<pre>";
+//                print_r($result_true_array); // вывод масива с количеством правильных ответов по всем вопросам теста
+//                echo "</pre>";
                 ?>
                 <br>
-                <input class="button" type="submit" value="Отправить">
-            </fieldset>
 
+            </fieldset>
+            <input class="button" type="submit" value="Отправить">
         </form>
 
     </div>
