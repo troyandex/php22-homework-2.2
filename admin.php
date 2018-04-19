@@ -5,21 +5,6 @@ echo "<hr>";
 print_r($_POST);
 echo "<hr>";
 
-if (isset($_FILES)) { // могу ошибаться с условием (пример по которому работал - больше условий)
-    $file_name = $_FILES['test_file']['name'];
-    echo $file_name . " - имя файла <hr>";
-
-    $tmp_dir = $_FILES['test_file']['tmp_name'];
-    echo $tmp_dir . " - временный адрес файла <hr>";
-
-    $server = 'server/';
-    $new_dir = $server . $file_name;
-    echo $new_dir . " - будет новый адрес файла <hr>";
-
-    $path_info = pathinfo($server . $file_name);
-    print_r($path_info);
-    echo " - масив с информацие по файлу <hr>";
-};
 echo "</pre>";
 ?>
 
@@ -49,14 +34,23 @@ echo "</pre>";
             <input type=file name=test_file>
             <input type=submit value=Загрузить>
             <p>
-                <?php
+            <?php
+            if (isset($_FILES) && isset($_POST) && isset($_FILES['test_file'])) {
+                $file_name = $_FILES['test_file']['name'];
+                $tmp_file = $_FILES['test_file']['tmp_name'];
+                $server = 'server/';
+                $path_info = pathinfo($server . $file_name);
+
                 if ($path_info['extension'] === 'json') {
-                    move_uploaded_file($_FILES['test_file']['tmp_name'], $new_dir); // пока ошибка
+                    move_uploaded_file($tmp_file, $server .$file_name);
                     echo "<strong>Тест загружен на сервер</strong>";
-                }else{
+                    exit;
+                }else {
                     echo "<strong>Неверный формат (нужен .json)</strong>";
-                }
-                ?>
+                };
+            };
+
+            ?>
             </p>
         </form>
     </div>
