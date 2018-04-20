@@ -1,12 +1,13 @@
 <?php
 $file_list = glob('server/*.json');
 $test = [];
-if (!empty($_GET['test']) && !empty($file_list[$_GET['test']])) {
-    $file_test = file_get_contents($file_list[$_GET['test']]);
-    $decode_file = json_decode($file_test, true);
-    $test = $decode_file;
+foreach ($file_list as $key => $file) {
+    if ($key == $_GET['test']) {  // в параметре гет номер теста который декодим
+        $file_test = file_get_contents($file_list[$key]);
+        $decode_file = json_decode($file_test, true);
+        $test = $decode_file;
+    }
 }
-
 $questions = $test['questions']; // масив из вопросов с ответами выбраного (по гет) теста
 ?>
 
@@ -58,16 +59,22 @@ $questions = $test['questions']; // масив из вопросов с отве
                     if (count($_POST) > 0) { // если есть пост - проверяем
                         $answers_key = "$key1-$key2"; // ключ текущего ответа для сверки
                         if (isset($_POST[$answers_key])) { // если есть пост с таким же как вопрос индексом
+                            global $selected;
+                            $selected = "checked";
                             if ($item['result'] === true) { // и он верный
                                 $post_true++; // плюсуем верно
                             } else {
                                 $post_false++; // иначе плюсуем ошибку
                             }
+                        } else {
+                            $selected = "";
                         }
+                    } else {
+                        $selected = "";
                     };
                     ?>
                     <label class="answer">
-                        <input type="checkbox" name="<?php echo $key1."-".$key2;?>" value="<?php echo $key1."-".$key2;?>">
+                        <input type="checkbox" name="<?php echo $key1."-".$key2;?>" value="<?php echo $key1."-".$key2;?>" <?=$selected?>>
                         <?=$item['answer'];?>
                     </label>
                 <?php
@@ -87,7 +94,7 @@ $questions = $test['questions']; // масив из вопросов с отве
             if (count($_POST) > 0) {
                 if ($post_true === $result_true && $post_false === 0) {
                     echo '<h4>Результат: Правильно!</h4>';
-                }elseif ($post_true > 0 && $post_false > 0) {
+                }elseif ($post_true > 0 && $post_false <> 0) {
                     echo '<h4>Результат: Почти угадали (попробуйте еще)</h4>';
                 }else{
                     echo '<h4>Результат: Совсем не то</h4>';
