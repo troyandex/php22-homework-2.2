@@ -1,13 +1,12 @@
 <?php
 $file_list = glob('server/*.json');
 $test = [];
-foreach ($file_list as $key => $file) {
-    if ($key == $_GET['test']) {  // в параметре гет номер теста который декодим
-        $file_test = file_get_contents($file_list[$key]);
-        $decode_file = json_decode($file_test, true);
-        $test = $decode_file;
-    }
+if (!empty($_GET['test']) && !empty($file_list[$_GET['test']])) {
+    $file_test = file_get_contents($file_list[$_GET['test']]);
+    $decode_file = json_decode($file_test, true);
+    $test = $decode_file;
 }
+
 $questions = $test['questions']; // масив из вопросов с ответами выбраного (по гет) теста
 ?>
 
